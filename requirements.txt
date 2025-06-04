@@ -20,3 +20,4 @@ python-magic
 pydantic
 qdrant-client
 langchain-qdrant
+langchain-mistralai
