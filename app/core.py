@@ -21,11 +21,13 @@ QDRANT_COLLECTION_NAME = os.getenv("QDRANT_COLLECTION_NAME", "document_collectio
 
 def get_embeddings():
  #   return HuggingFaceEmbeddings(model_name="sentence-transformers/distiluse-base-multilingual-cased-v2")
-    return MistralAIEmbeddings(api_key=MISTRAL_API_KEY, model=MISTRAL_EMBEDDING_MODEL)
+    return MistralAIEmbeddings(api_key=MISTRAL_API_KEY, model=MISTRAL_EMBEDDINGS_MODEL)
 
-def get_llm():
- #   return OllamaLLM(model="cogito:3b")
-    return ChatMistralAI(model=MISTRAL_LLM_MODEL, api_key=MISTRAL_API_KEY)
+def get_llm_code():
+    return ChatMistralAI(model=MISTRAL_LLM_ANALYZE_CODE_MODEL, api_key=MISTRAL_API_KEY)
+
+def get_llm_query():
+    return ChatMistralAI(model=MISTRAL_LLM_QUERY_MODEL, api_key=MISTRAL_API_KEY)
 
 def get_vectorstore():
     """
