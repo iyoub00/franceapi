@@ -4,24 +4,32 @@
 import os
 import logging
 from dotenv import load_dotenv
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import OllamaLLM
+from langchain_mistralai.chat_models import ChatMistralAI
+from langchain_mistralai.embeddings import MistralAIEmbeddings
 from qdrant_client import QdrantClient, models
 from langchain_qdrant import QdrantVectorStore
+from app.settings import (
+    MISTRAL_API_KEY,
+    MISTRAL_LLM_ANALYZE_CODE_MODEL,
+    MISTRAL_LLM_QUERY_MODEL,
+    MISTRAL_EMBEDDINGS_MODEL,
+    QDRANT_HOST,
+    QDRANT_PORT,
+    QDRANT_COLLECTION_NAME
+)
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-QDRANT_HOST = os.getenv("QDRANT_HOST", "127.0.0.1")
-QDRANT_PORT = int(os.getenv("QDRANT_PORT", 6333))
-QDRANT_COLLECTION_NAME = os.getenv("QDRANT_COLLECTION_NAME", "document_collection")
-
 def get_embeddings():
-    return HuggingFaceEmbeddings(model_name="sentence-transformers/distiluse-base-multilingual-cased-v2")
+    return MistralAIEmbeddings(api_key=MISTRAL_API_KEY, model=MISTRAL_EMBEDDINGS_MODEL)
 
-def get_llm():
-    return OllamaLLM(model="cogito:3b")
+def get_llm_code():
+    return ChatMistralAI(model=MISTRAL_LLM_ANALYZE_CODE_MODEL, api_key=MISTRAL_API_KEY)
+
+def get_llm_query():
+    return ChatMistralAI(model=MISTRAL_LLM_QUERY_MODEL, api_key=MISTRAL_API_KEY)
 
 def get_vectorstore():
     """

@@ -1,7 +1,7 @@
 # Silicon Shoring - API AI Agent
 
 ## Overview
-Silicon Shoring - API AI Agent is an agent that allows you to interact with your documents and Git repositories using natural language. It leverages a Retrieval Augmented Generation (RAG) pipeline, local Large Language Models (LLM) via Ollama, and a Qdrant vector database to provide insightful answers and summaries from your data.
+Silicon Shoring - API AI Agent is an agent that allows you to interact with your documents and Git repositories using natural language. It leverages a Retrieval Augmented Generation (RAG) pipeline, local Large Language Models (LLM) via Mistral, and a Qdrant vector database to provide insightful answers and summaries from your data.
 
 ## Key Features
 *   Query documents using natural language.
@@ -35,9 +35,9 @@ Silicon Shoring - API AI Agent is an agent that allows you to interact with your
 ## Technologies Used
 *   **FastAPI:** For building the API.
 *   **Langchain:** For RAG pipeline orchestration and LLM interaction.
-*   **Ollama:** For running local Large Language Models.
+*   **Mistral:** For running Large Language Models.
 *   **Qdrant:** Vector database for storing and retrieving embeddings.
-*   **HuggingFace Embeddings:** For generating text embeddings.
+*   **Mistral Embeddings:** For generating text embeddings.
 *   **python-magic:** For MIME type detection of uploaded files.
 *   **UnstructuredFileLoader:** For loading various document types.
 
@@ -45,7 +45,7 @@ Silicon Shoring - API AI Agent is an agent that allows you to interact with your
 
 *   `main.py`: Initializes and runs the FastAPI application.
 *   `app/api.py`: Defines API endpoints for file upload, repository ingestion, and querying.
-*   `app/core.py`: Manages core components like LLM (Ollama), embedding models (HuggingFace), and the Qdrant vector store connection. Handles dynamic Qdrant collection creation.
+*   `app/core.py`: Manages core components like LLM , embedding models, and the Qdrant vector store connection. Handles dynamic Qdrant collection creation.
 *   `app/document.py`: Handles document loading (using Unstructured), chunking, embedding, and indexing into Qdrant. Also provides utilities for adding generic texts to Qdrant.
 *   `app/rag_service.py`: Implements the core RAG logic for answering questions and provides services for LLM-based analysis of file content and summarization of repository analyses.
 *   `app/rag_prompt.py`: Contains the French prompt template for the RAG model.
@@ -53,14 +53,14 @@ Silicon Shoring - API AI Agent is an agent that allows you to interact with your
 *   `app/utils/document_utils.py`: Contains utility functions for document handling, like text cleaning, and lists of supported extensions/ignored folders for repository processing.
 *   `app/utils/file_validation.py`: Validates uploaded files based on MIME type (using `python-magic`) and size. Supports PDF, DOC, DOCX, TXT.
 *   `app/utils/repo_utils.py`: Handles cloning of Git repositories, iterating through files (skipping irrelevant ones), orchestrating file analysis with `code_analyzer.py` and `rag_service.py`, and storing individual file analyses in Qdrant.
-*   `app/settings.py`: Placeholder for future application settings.
+*   `app/settings.py`: Placeholder for application settings.
 
 ## Getting Started
 
 ### Prerequisites
 *   Python 3.8+
 *   Docker Engine
-*   Ollama (visit [https://ollama.com/](https://ollama.com/) for installation)
+*   Mistral API Key
 
 ### Installation
 1.  Clone the repository:
@@ -103,7 +103,7 @@ Silicon Shoring - API AI Agent is an agent that allows you to interact with your
     *(Note: `$(pwd)/qdrant_storage` creates a directory in your current project folder to persist Qdrant data. Adjust path if needed. The `:z` option is for SELinux systems, remove if not applicable.)*
 3.  Access Qdrant dashboard: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
 
-### Ollama Setup (Local LLM)
+#### Only for local - Ollama Setup (Local LLM)
 1.  Ensure Ollama is installed and running.
 2.  Pull the required model (this is the default, can be changed in `app/core.py`):
     ```bash
@@ -116,6 +116,7 @@ Create a `.env` file in the project root to customize settings. Defaults are use
 # QDRANT_HOST=127.0.0.1
 # QDRANT_PORT=6333
 # QDRANT_COLLECTION_NAME=document_collection
+# MISTRAL_API_KEY=
 ```
 
 ### Running the Application
@@ -202,4 +203,11 @@ The API will be accessible at `http://localhost:8000`.
 ## Deployment
 *   **Application:** The FastAPI application can be containerized using Docker. A `Dockerfile` would be needed. For production, run with a production-grade ASGI server like Gunicorn behind a reverse proxy (e.g., Nginx).
 *   **Qdrant:** For production, ensure Qdrant's storage volume is properly managed and backed up. Refer to official Qdrant documentation for clustering and scaling.
-*   **Ollama:** Refer to Ollama documentation for production deployment and model management.
+*   **Mistral:** Specify the apiKey on the `.env` file.
+*   **huggingface:** Specify the apiKey on the `.env` file. The user that will generate the token have to first agree to the terms on the page : https://huggingface.co/mistralai/Mixtral-8x7B-v0.1
+
+### .env File
+```sh
+MISTRAL_API_KEY=XXXXXXX
+HF_TOKEN=hf_XXXXXX
+```
