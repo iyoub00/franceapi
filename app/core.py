@@ -23,7 +23,6 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 def get_embeddings():
- #   return HuggingFaceEmbeddings(model_name="sentence-transformers/distiluse-base-multilingual-cased-v2")
     return MistralAIEmbeddings(api_key=MISTRAL_API_KEY, model=MISTRAL_EMBEDDINGS_MODEL)
 
 def get_llm_code():

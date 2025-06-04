@@ -45,7 +45,7 @@ Silicon Shoring - API AI Agent is an agent that allows you to interact with your
 
 *   `main.py`: Initializes and runs the FastAPI application.
 *   `app/api.py`: Defines API endpoints for file upload, repository ingestion, and querying.
-*   `app/core.py`: Manages core components like LLM (Ollama), embedding models (HuggingFace), and the Qdrant vector store connection. Handles dynamic Qdrant collection creation.
+*   `app/core.py`: Manages core components like LLM , embedding models, and the Qdrant vector store connection. Handles dynamic Qdrant collection creation.
 *   `app/document.py`: Handles document loading (using Unstructured), chunking, embedding, and indexing into Qdrant. Also provides utilities for adding generic texts to Qdrant.
 *   `app/rag_service.py`: Implements the core RAG logic for answering questions and provides services for LLM-based analysis of file content and summarization of repository analyses.
 *   `app/rag_prompt.py`: Contains the French prompt template for the RAG model.

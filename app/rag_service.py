@@ -14,8 +14,7 @@ def rag_query(question: str, chunks: list):
     
     llm = get_llm_query()
     response = llm.invoke(prompt)
-    
-    return response.strip()
+    return response.content.strip()
 
 def analyze_file_content(content: str, filename: str) -> str:
     """
@@ -25,7 +24,7 @@ def analyze_file_content(content: str, filename: str) -> str:
     prompt = f"Analyze the following file content from '{filename}' and provide a concise summary of its purpose, functionality, and key components: \n\n{content}\n\nAnalysis:"
     try:
         response = llm.invoke(prompt)
-        return response.strip()
+        return response.content.strip()
     except Exception as e:
         logger.error(f"LLM invocation failed for analyze_file_content (filename: {filename}): {e}", exc_info=True)
         return f"Error: LLM analysis failed for file {filename}."
@@ -52,7 +51,7 @@ def summarize_repository_analyses(analyses: dict[str, str], repo_name: str) -> s
     prompt = f"The following are file summaries from the repository '{repo_name}':\n\n{context_for_summary}\n\nProvide a concise overall summary of the repository's purpose and architecture based on these file summaries.\n\nOverall Repository Summary:"
     try:
         response = llm.invoke(prompt)
-        return response.strip()
+        return response.content.strip()
     except Exception as e:
         logger.error(f"LLM invocation failed for summarize_repository_analyses (repo_name: {repo_name}): {e}", exc_info=True)
         return f"Error: LLM summary generation failed for repository {repo_name}."
