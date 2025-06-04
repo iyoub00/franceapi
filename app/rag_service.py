@@ -3,7 +3,7 @@
 # Author: Yassine Amounane
 import logging
 import json
-from app.core import get_llm_rag, get_llm_code, get_llm_query
+from app.core import get_llm_code, get_llm_query
 from app.rag_prompt import RAG_PROMPT
 
 logger = logging.getLogger(__name__)
