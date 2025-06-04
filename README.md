@@ -204,3 +204,10 @@ The API will be accessible at `http://localhost:8000`.
 *   **Application:** The FastAPI application can be containerized using Docker. A `Dockerfile` would be needed. For production, run with a production-grade ASGI server like Gunicorn behind a reverse proxy (e.g., Nginx).
 *   **Qdrant:** For production, ensure Qdrant's storage volume is properly managed and backed up. Refer to official Qdrant documentation for clustering and scaling.
 *   **Mistral:** Specify the apiKey on the `.env` file.
+*   **huggingface:** Specify the apiKey on the `.env` file. The user that will generate the token have to first agree to the terms on the page : https://huggingface.co/mistralai/Mixtral-8x7B-v0.1
+
+### .env File
+```sh
+MISTRAL_API_KEY=XXXXXXX
+HF_TOKEN=hf_XXXXXX
+```
