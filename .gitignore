@@ -179,3 +179,4 @@ cython_debug/
 /temp
 /qdrant
 .DS_STORE
+.idea
